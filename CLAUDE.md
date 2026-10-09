@@ -5,7 +5,24 @@ Full design: `docs/design.md`. Read it before making architectural decisions.
 
 ## Current status
 
-Design / Phase 1 (text-only MVP) not started. Nothing is implemented yet.
+Phase 1 (text-only MVP) implemented: onboarding, deterministic planner, adaptive sessions (drill / reading /
+writing / reflection), attempt pipeline state machine, Claude tool-calling analysis with validated proposals,
+error library with dedupe, Beta-Bernoulli mastery, FSRS reviews, progress + model telemetry.
+Not yet: audio (listening/speaking), TCF rule store (Layer 1), weekly reports, fixed eval set, auth.
+
+## Layout
+
+- `src/lib/domain/` pure logic (planner, mastery, FSRS, validation, attempt state machine). No I/O.
+- `src/lib/llm/` provider interface, Claude provider, mock provider, prompts (versioned), schemas + proposal validation.
+- `src/lib/services/` orchestration over the db (PGlite via Drizzle). API routes in `src/app/api/` are thin wrappers.
+- Tests: `npm test` (vitest unit + integration on in-memory Postgres), `npm run test:e2e` (Playwright, mock provider),
+  `npm run smoke -- <url>` (HTTP walkthrough against a throwaway server).
+- Schema change: edit `src/lib/db/schema.ts`, then `npm run db:generate`.
+
+## Workflow
+
+Test every feature (unit/integration + e2e) before calling it done. After major changes, start `npm run dev`
+for the user to try manually.
 
 ## Non-negotiable design rules
 
@@ -25,7 +42,9 @@ fixed LLM eval suite + observability tracking correction accuracy, unsupported c
 p50/p95 latency, tokens, cost). Prioritize work that makes those bullets true. Never invent metrics —
 any number must come from real, reproducible measurements recorded in this repo.
 
-## Stack (planned)
+## Stack
 
-Next.js + React + TypeScript, PostgreSQL (pgvector only where needed), FSRS for review scheduling,
-Vitest + Playwright, GitHub Actions.
+Next.js 16 + React 19 + TypeScript, Postgres via PGlite (embedded; swap driver for hosted Postgres), Drizzle,
+ts-fsrs, Zod, Anthropic SDK (`claude-opus-5`), Vitest + Playwright.
+
+@AGENTS.md

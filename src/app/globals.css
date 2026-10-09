@@ -1,0 +1,86 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #f7f7f4;
+  --surface: #ffffff;
+  --surface-2: #f0f0ec;
+  --line: #e2e2dc;
+  --text: #1c1c1a;
+  --muted: #6b6b66;
+  --accent: #1f4fd1;
+  --accent-soft: #e8eefc;
+  --on-accent: #ffffff;
+  --good: #1d7a46;
+  --good-soft: #e5f4ea;
+  --bad: #b3261e;
+  --bad-soft: #fbe9e7;
+  --warn: #8a5a00;
+  --warn-soft: #fbf1dc;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121211;
+    --surface: #1b1b1a;
+    --surface-2: #242422;
+    --line: #34342f;
+    --text: #ececea;
+    --muted: #a1a19b;
+    --accent: #8aa8ff;
+    --accent-soft: #1d2640;
+    --on-accent: #121211;
+    --good: #6fcf97;
+    --good-soft: #16291e;
+    --bad: #f28b82;
+    --bad-soft: #3a1c1a;
+    --warn: #f2c46d;
+    --warn-soft: #33290f;
+  }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-on-accent: var(--on-accent);
+  --color-good: var(--good);
+  --color-good-soft: var(--good-soft);
+  --color-bad: var(--bad);
+  --color-bad-soft: var(--bad-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+@utility card {
+  @apply rounded-xl border border-line bg-surface p-5;
+}
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-50;
+}
+@utility btn-primary {
+  @apply btn bg-accent text-on-accent hover:opacity-90;
+}
+@utility btn-ghost {
+  @apply btn border border-line bg-surface text-text hover:bg-surface-2;
+}
+@utility input {
+  @apply w-full rounded-lg border border-line bg-surface px-3 py-2 text-base text-text outline-none focus:border-accent focus:ring-2 focus:ring-accent-soft;
+}
+@utility label {
+  @apply mb-1 block text-sm font-medium;
+}
+@utility chip {
+  @apply inline-flex items-center rounded-full border border-line px-2 py-0.5 text-xs text-muted;
+}
